@@ -1,0 +1,60 @@
+version: '3.3'
+
+services:
+
+  postgis:
+    build: ./postgis/
+    environment:
+      POSTGRES_PASSWORD: mysecretpw
+      POSTGRES_DB: experiment
+    ports:
+       - 5432
+    volumes: 
+      - $PWD/data/postgis:/var/lib/postgresql/data
+    container_name: postgis
+
+  geoserver:
+    build: ./geoserver/
+    ports:
+      - 8080
+    environment:
+      DB_BACKEND: POSTGRES
+      HOST: postgis
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: experiment
+      POSTGRES_USER: postgres
+      POSTGRES_PASS: mysecretpw
+      GEOSERVER_DATA_DIR: /usr/local/tomcat/data
+    volumes: 
+      - $PWD/data/geoserver:/usr/local/tomcat/data
+    container_name: geoserver
+    links: 
+      - postgis
+
+  mapstore:
+    build: ./mapstore/
+    ports:
+      - 8080
+    container_name: mapstore
+    links: 
+      - geoserver
+      - postgis
+
+  pygeoapi:
+    build: ./pygeoapi/
+    ports:
+      - 8080
+    container_name: pygeoapi
+    links:
+      - postgis
+      - geoserver
+
+  apache-httpd:
+    build: ./apache-httpd/
+    ports:
+      - 8080:8080
+    container_name: apache-httpd
+    links:
+      - pygeoapi
+      - geoserver
+      - mapstore
