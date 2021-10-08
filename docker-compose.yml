@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_PASSWORD: mysecretpw
       POSTGRES_DB: experiment
-    ports:
+    expose:
        - 5432
     volumes: 
       - $PWD/data/postgis:/var/lib/postgresql/data
@@ -15,8 +15,8 @@ services:
 
   geoserver:
     build: ./geoserver/
-    ports:
-      - 8080
+    expose:
+      - 8009
     environment:
       DB_BACKEND: POSTGRES
       HOST: postgis
@@ -28,33 +28,22 @@ services:
     volumes: 
       - $PWD/data/geoserver:/usr/local/tomcat/data
     container_name: geoserver
-    links: 
-      - postgis
 
   mapstore:
     build: ./mapstore/
-    ports:
+    expose:
       - 8080
     container_name: mapstore
-    links: 
-      - geoserver
-      - postgis
 
   pygeoapi:
     build: ./pygeoapi/
-    ports:
-      - 8080
+    expose:
+      - 80
     container_name: pygeoapi
-    links:
-      - postgis
-      - geoserver
 
   apache-httpd:
     build: ./apache-httpd/
     ports:
-      - 8080:8080
+      - "80:80"
+      - "443:443"
     container_name: apache-httpd
-    links:
-      - pygeoapi
-      - geoserver
-      - mapstore
