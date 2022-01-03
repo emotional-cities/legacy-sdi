@@ -1,1 +1,1 @@
-<Context path="/geoserver" docBase="/usr/local/geoserver"></Context>
+<Context docBase="/usr/local/geoserver"></Context>
