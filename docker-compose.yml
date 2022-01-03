@@ -27,6 +27,7 @@ services:
       GEOSERVER_DATA_DIR: /usr/local/tomcat/data
     volumes: 
       - $PWD/data/geoserver:/usr/local/tomcat/data
+      - $PWD/data/geoserver/gwc:/usr/local/tomcat/data/gwc
     container_name: geoserver
 
   mapstore:
@@ -47,3 +48,24 @@ services:
       - "80:80"
       - "443:443"
     container_name: apache-httpd
+
+  openladap:
+    build: ./openldap/
+    expose:
+      - 1389
+      - 1636
+    ports:
+      - '1389:1389'
+      - '1636:1636'
+    environment:
+      - LDAP_ADMIN_USERNAME=admin
+      - LDAP_ADMIN_PASSWORD=openldap
+      - LDAP_USERS=antonio,joana
+      - LDAP_PASSWORDS=antonio,joana
+      #- LDAP_TLS_CERT_FILE=/opt/bitnami/openldap/certs/openldap.crt
+      #- LDAP_TLS_KEY_FILE=/opt/bitnami/openldap/certs/openldap.key
+      #- LDAP_TLS_CA_FILE=/opt/bitnami/openldap/certs/openldapCA.crt
+    volumes:
+      - $PWD/data/openldap/data:/bitnami/openldap
+      #- $PWD/data/openldap/certs:/opt/bitnami/openldap/certs
+    container_name: openldap
