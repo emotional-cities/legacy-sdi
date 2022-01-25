@@ -26,7 +26,7 @@ services:
       POSTGRES_PASS: mysecretpw
       GEOSERVER_DATA_DIR: /usr/local/tomcat/data
     volumes: 
-      - $PWD/data/geoserver:/usr/local/tomcat/data
+      - $PWD/data/geoserver:/var/local/geoserver
       - $PWD/data/geoserver/gwc:/usr/local/tomcat/data/gwc
     container_name: geoserver
 
@@ -62,10 +62,11 @@ services:
       - LDAP_ADMIN_PASSWORD=openldap
       - LDAP_USERS=antonio,joana
       - LDAP_PASSWORDS=antonio,joana
+      - LDAP_ROOT=dc=emotionalcities,dc=org
       #- LDAP_TLS_CERT_FILE=/opt/bitnami/openldap/certs/openldap.crt
       #- LDAP_TLS_KEY_FILE=/opt/bitnami/openldap/certs/openldap.key
       #- LDAP_TLS_CA_FILE=/opt/bitnami/openldap/certs/openldapCA.crt
     volumes:
-      - $PWD/data/openldap/data:/bitnami/openldap
+      - $PWD/data/openldap/dataz:/bitnami/openldap
       #- $PWD/data/openldap/certs:/opt/bitnami/openldap/certs
     container_name: openldap
