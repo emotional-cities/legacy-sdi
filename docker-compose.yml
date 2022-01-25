@@ -5,12 +5,14 @@ services:
   postgis:
     build: ./postgis/
     environment:
-      POSTGRES_PASSWORD: mysecretpw
-      POSTGRES_DB: experiment
+      POSTGRES_PASSWORD: G1rlP0w3r
+      POSTGRES_DB: geodb
     expose:
        - 5432
     volumes: 
-      - $PWD/data/postgis:/var/lib/postgresql/data
+      - postgis_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     container_name: postgis
 
   geoserver:
@@ -21,13 +23,13 @@ services:
       DB_BACKEND: POSTGRES
       HOST: postgis
       POSTGRES_PORT: 5432
-      POSTGRES_DB: experiment
+      POSTGRES_DB: geodb
       POSTGRES_USER: postgres
-      POSTGRES_PASS: mysecretpw
-      GEOSERVER_DATA_DIR: /usr/local/tomcat/data
+      POSTGRES_PASS: G1rlP0w3r
+      GEOSERVER_DATA_DIR: /var/local/geoserver
     volumes: 
-      - $PWD/data/geoserver:/var/local/geoserver
-      - $PWD/data/geoserver/gwc:/usr/local/tomcat/data/gwc
+      - geoserver_data:/var/local/geoserver
+      - geoserver_gwc_data:/var/local/geoserver-gwc
     container_name: geoserver
 
   mapstore:
@@ -36,12 +38,6 @@ services:
       - 8080
     container_name: mapstore
 
-  pygeoapi:
-    build: ./pygeoapi/
-    expose:
-      - 80
-    container_name: pygeoapi
-
   apache-httpd:
     build: ./apache-httpd/
     ports:
@@ -49,24 +45,10 @@ services:
       - "443:443"
     container_name: apache-httpd
 
-  openladap:
-    build: ./openldap/
-    expose:
-      - 1389
-      - 1636
-    ports:
-      - '1389:1389'
-      - '1636:1636'
-    environment:
-      - LDAP_ADMIN_USERNAME=admin
-      - LDAP_ADMIN_PASSWORD=openldap
-      - LDAP_USERS=antonio,joana
-      - LDAP_PASSWORDS=antonio,joana
-      - LDAP_ROOT=dc=emotionalcities,dc=org
-      #- LDAP_TLS_CERT_FILE=/opt/bitnami/openldap/certs/openldap.crt
-      #- LDAP_TLS_KEY_FILE=/opt/bitnami/openldap/certs/openldap.key
-      #- LDAP_TLS_CA_FILE=/opt/bitnami/openldap/certs/openldapCA.crt
-    volumes:
-      - $PWD/data/openldap/dataz:/bitnami/openldap
-      #- $PWD/data/openldap/certs:/opt/bitnami/openldap/certs
-    container_name: openldap
+volumes:
+  geoserver_data:
+    driver: local
+  geoserver_gwc_data:
+    driver: local
+  postgis_data:
+    driver: local
