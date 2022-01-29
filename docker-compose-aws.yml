@@ -47,6 +47,7 @@ services:
       - "/etc/letsencrypt/live/oldskool.byteroad.net/cert.pem:usr/local/apache2/conf/ssl/certificate.crt"
       - "/etc/letsencrypt/live/oldskool.byteroad.net/chain.pem:/usr/local/apache2/conf/ssl/ca_bundle.crt"
       - "/etc/letsencrypt/live/oldskool.byteroad.net/privkey.pem:/usr/local/apache2/conf/ssl/private.key"
+      - ./apache-httpd/httpd-ssl.conf:/usr/local/apache2/conf/httpd.conf
     ports:
       - "80:80"
       - "443:443"
