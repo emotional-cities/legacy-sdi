@@ -38,3 +38,10 @@ Then, launch the stack using `docker-compose-aws.yml`:
 ``` bash
 docker-compose -f docker-compose-aws.yml up -d
 ```
+
+Or use the provided convenience script:
+
+``` bash
+./run_aws.sh
+```
+
