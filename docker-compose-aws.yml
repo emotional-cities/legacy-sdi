@@ -41,7 +41,7 @@ services:
   apache-httpd:
     image: httpd:2.4
     volumes: 
-      - ./apache-httpd/httpd.conf:/usr/local/apache2/conf/httpd.conf
+      - ./apache-httpd/httpd-ssl.conf:/usr/local/apache2/conf/httpd.conf
     ports:
       - "80:80"
       - "443:443"

@@ -22,3 +22,19 @@ With this configuration:
 
 **Server URL**: ldap://openldap:1389/dc=emotionalcities,dc=org
 **User lookup pattern**: cn={0},ou=users
+
+### SSL with Let's encrypt
+
+If you are running Apache with SSL (recommended setup for production), create your SSL certificates first (for instance using [let's encrypt](https://letsencrypt.org/)) and edit this part of [httpd-ssl.conf](./apache-httpd/httpd-ssl.conf), to make sure it points to the right certificates:
+
+```
+    SSLCertificateFile    /etc/letsencrypt/live/oldskool.byteroad.net/cert.pem
+    SSLCertificateKeyFile /etc/letsencrypt/live/oldskool.byteroad.net/privkey.pem
+    SSLCertificateChainFile /etc/letsencrypt/live/oldskool.byteroad.net/fullchain.pem
+```
+
+Then, launch the stack using `docker-compose-aws.yml`:
+
+``` bash
+docker-compose -f docker-compose-aws.yml up -d
+```
