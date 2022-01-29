@@ -43,6 +43,9 @@ services:
 
   apache-httpd:
     image: httpd:2.4
+    depends_on:
+      - geoserver
+      - mapstore
     volumes: 
       - "/etc/letsencrypt/archive/oldskool.byteroad.net/cert1.pem:/usr/local/apache2/conf/server.crt"
       #- "/etc/letsencrypt/archive/oldskool.byteroad.net/chain1.pem:/usr/local/apache2/conf/ca_bundle.crt"
