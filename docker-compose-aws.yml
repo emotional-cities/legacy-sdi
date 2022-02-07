@@ -15,6 +15,7 @@ services:
       - "5432:5432"
     container_name: postgis
     image: emotionalcities/sdi-template-postgis
+    restart: unless-stopped
 
   geoserver:
     #build: ./geoserver/
@@ -28,11 +29,13 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASS: G1rlP0w3r
       GEOSERVER_DATA_DIR: /var/local/geoserver
+    restart: unless-stopped
     volumes: 
       - geoserver_data:/var/local/geoserver
       - geoserver_gwc_data:/var/local/geoserver-gwc
     container_name: geoserver
     image: emotionalcities/sdi-template-geoserver
+    restart: unless-stopped
 
   mapstore:
     #build: ./mapstore/
@@ -55,6 +58,7 @@ services:
       - "80:80"
       - "443:443"
     container_name: apache-httpd
+    restart: unless-stopped
 
 volumes:
   geoserver_data:
