@@ -29,7 +29,6 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASS: G1rlP0w3r
       GEOSERVER_DATA_DIR: /var/local/geoserver
-    restart: unless-stopped
     volumes: 
       - geoserver_data:/var/local/geoserver
       - geoserver_gwc_data:/var/local/geoserver-gwc
