@@ -1,4 +1,4 @@
-# Emotional Cities SDI template (Raster)
+# Emotional Cities SDI template (Legacy)
 
 This is a set of Docker images configured in a docker composition that contains:
 
