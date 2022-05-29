@@ -22,3 +22,5 @@ With this configuration:
 
 **Server URL**: ldap://openldap:1389/dc=emotionalcities,dc=org
 **User lookup pattern**: cn={0},ou=users
+
+[![DOI](https://zenodo.org/badge/413468166.svg)](https://zenodo.org/badge/latestdoi/413468166)
