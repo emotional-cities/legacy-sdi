@@ -1,3 +1,3 @@
 
 #!/bin/bash
-docker-compose -f docker-compose-aws.yml up -d
+docker-compose up -d

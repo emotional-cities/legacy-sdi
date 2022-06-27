@@ -3,7 +3,7 @@ version: '3.3'
 services:
 
   postgis:
-    #build: ./postgis/
+    build: ./postgis/
     environment:
       POSTGRES_PASSWORD: G1rlP0w3r
       POSTGRES_DB: geodb
@@ -14,11 +14,9 @@ services:
     ports:
       - "5432:5432"
     container_name: postgis
-    image: emotionalcities/sdi-template-postgis
-    restart: unless-stopped
 
   geoserver:
-    #build: ./geoserver/
+    build: ./geoserver/
     expose:
       - 8009
     environment:
@@ -33,31 +31,21 @@ services:
       - geoserver_data:/var/local/geoserver
       - geoserver_gwc_data:/var/local/geoserver-gwc
     container_name: geoserver
-    image: emotionalcities/sdi-template-geoserver
-    restart: unless-stopped
 
   mapstore:
-    #build: ./mapstore/
+    build: ./mapstore/
     expose:
       - 8080
     container_name: mapstore
-    image: emotionalcities/sdi-template-mapstore
 
   apache-httpd:
     image: httpd:2.4
-    depends_on:
-      - geoserver
-      - mapstore
     volumes: 
-      - "/etc/letsencrypt/archive/oldskool.byteroad.net/cert2.pem:/usr/local/apache2/conf/server.crt"
-      #- "/etc/letsencrypt/archive/oldskool.byteroad.net/chain1.pem:/usr/local/apache2/conf/ca_bundle.crt"
-      - "/etc/letsencrypt/archive/oldskool.byteroad.net/privkey2.pem:/usr/local/apache2/conf/server.key"
-      - ./apache-httpd/httpd-ssl.conf:/usr/local/apache2/conf/httpd.conf
+      - ./apache-httpd/httpd.conf:/usr/local/apache2/conf/httpd.conf
     ports:
       - "80:80"
       - "443:443"
     container_name: apache-httpd
-    restart: unless-stopped
 
 volumes:
   geoserver_data:

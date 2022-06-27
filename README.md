@@ -33,15 +33,21 @@ If you are running Apache with SSL (recommended setup for production), create yo
     SSLCertificateChainFile /etc/letsencrypt/live/oldskool.byteroad.net/fullchain.pem
 ```
 
-Then, launch the stack using `docker-compose-aws.yml`:
+Then, launch the stack using `docker-compose.yml`:
 
 ``` bash
-docker-compose -f docker-compose-aws.yml up -d
+docker-compose up -d
 ```
-
 Or use the provided convenience script:
 
 ``` bash
 ./run_aws.sh
 ```
 
+### To run on localhost
+
+To run the composition on your localhost
+
+``` bash
+docker-compose -f docker-compose-local.yml up -d
+```
